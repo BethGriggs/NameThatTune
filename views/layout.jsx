@@ -5,13 +5,6 @@ export default function Layout(props) {
   return (
     <html>
       <body>
-        <Header
-          mainBreadcrumbs="Watson Speech to Text Starter"
-          mainBreadcrumbsUrl="#"
-          subBreadcrumbs="ntsong"
-          subBreadcrumbsUrl="#"
-
-        />
         <div id="root">
           {props.children}
         </div>

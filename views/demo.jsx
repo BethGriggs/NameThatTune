@@ -5,7 +5,6 @@ import recognizeMicrophone from 'watson-speech/speech-to-text/recognize-micropho
 import recognizeFile from 'watson-speech/speech-to-text/recognize-file';
 import {Transcript} from './transcript.jsx';
 import {SpeakersView} from './speaker.jsx';
-import {TimingView} from './timing.jsx';
 import samples from '../src/data/samples.json';
 import cachedModels from '../src/data/models.json';
 
