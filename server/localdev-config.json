@@ -1,0 +1,8 @@
+{
+  "watson_speech_to_text_apikey": "QKdLyaA_NtzfFy_IDBKAkmj2rz0NIhkL5CzQJgVWDNMO",
+  "watson_speech_to_text_iam_apikey_description": "Auto generated apikey during resource-key operation for Instance - crn:v1:bluemix:public:speech-to-text:us-east:a/a9a7f40f404528121e36c1acee9ed6cd:35cae338-4fdd-402f-946a-42a93e79af94::",
+  "watson_speech_to_text_iam_apikey_name": "auto-generated-apikey-c882e9fb-dfa9-4ac8-b5f2-efd6eef3c1c5",
+  "watson_speech_to_text_iam_role_crn": "crn:v1:bluemix:public:iam::::serviceRole:Writer",
+  "watson_speech_to_text_iam_serviceid_crn": "crn:v1:bluemix:public:iam-identity::a/a9a7f40f404528121e36c1acee9ed6cd::serviceid:ServiceId-dc64bcfb-11a0-4f29-9dab-c98de9286551",
+  "watson_speech_to_text_url": "https://gateway-wdc.watsonplatform.net/speech-to-text/api"
+}

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "watson_speech_to_text_apikey": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:apikey",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.apikey",
+      "env:service_watson_speech_to_text:$.apikey",
+      "env:watson_speech_to_text_apikey",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_apikey"
+    ]
+  },
+  "watson_speech_to_text": {
+    "credentials": {
+      "searchPatterns": [
+        "user-provided:ntsong-speechtotext-1541255590331:url",
+        "cloudfoundry:watson_speech_to_text",
+        "env:watson_speech_to_text_credentials",
+        "file://localdev-config.json:watson_speech_to_text_credentials"
+      ]
+    }
+  },
+  "watson_speech_to_text_iam_apikey_description": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:iam_apikey_description",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.iam_apikey_description",
+      "env:service_watson_speech_to_text:$.iam_apikey_description",
+      "env:watson_speech_to_text_iam_apikey_description",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_iam_apikey_description"
+    ]
+  },
+  "watson_speech_to_text_iam_apikey_name": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:iam_apikey_name",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.iam_apikey_name",
+      "env:service_watson_speech_to_text:$.iam_apikey_name",
+      "env:watson_speech_to_text_iam_apikey_name",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_iam_apikey_name"
+    ]
+  },
+  "watson_speech_to_text_iam_role_crn": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:iam_role_crn",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.iam_role_crn",
+      "env:service_watson_speech_to_text:$.iam_role_crn",
+      "env:watson_speech_to_text_iam_role_crn",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_iam_role_crn"
+    ]
+  },
+  "watson_speech_to_text_iam_serviceid_crn": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:iam_serviceid_crn",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.iam_serviceid_crn",
+      "env:service_watson_speech_to_text:$.iam_serviceid_crn",
+      "env:watson_speech_to_text_iam_serviceid_crn",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_iam_serviceid_crn"
+    ]
+  },
+  "watson_speech_to_text_url": {
+    "searchPatterns": [
+      "user-provided:ntsong-speechtotext-1541255590331:url",
+      "cloudfoundry:$['bc35fb8c-bc5b-431b-859e-3861771d5843'][0].credentials.url",
+      "env:service_watson_speech_to_text:$.url",
+      "env:watson_speech_to_text_url",
+      "file:/server/localdev-config.json:$.watson_speech_to_text_url"
+    ]
+  }
+}
