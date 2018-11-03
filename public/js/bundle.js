@@ -47607,12 +47607,8 @@ exports.default = _react2.default.createClass({
       formattedMessages: [],
       audioSource: null,
       speakerLabels: true,
-      keywords: this.getKeywords('en-US_BroadbandModel'),
-      // transcript model and keywords are the state that they were when the button was clicked.
-      // Changing them during a transcription would cause a mismatch between the setting sent to the service and what is displayed on the demo, and could cause bugs.
       settingsAtStreamStart: {
         model: '',
-        keywords: [],
         speakerLabels: false
       },
       error: null
@@ -47634,7 +47630,6 @@ exports.default = _react2.default.createClass({
     this.setState({
       settingsAtStreamStart: {
         model: this.state.model,
-        keywords: this.getKeywordsArr(),
         speakerLabels: this.state.speakerLabels
       }
     });
@@ -47644,7 +47639,6 @@ exports.default = _react2.default.createClass({
     this.setState({ audioSource: null });
   },
   getRecognizeOptions: function getRecognizeOptions(extra) {
-    var keywords = this.getKeywordsArr();
     return Object.assign({
       access_token: this.state.accessToken,
       token: this.state.token,
@@ -47655,8 +47649,6 @@ exports.default = _react2.default.createClass({
       interim_results: true,
       continuous: true,
       word_alternatives_threshold: 0.01, // note: in normal usage, you'd probably set this a bit higher
-      keywords: keywords,
-      keywords_threshold: keywords.length ? 0.01 : undefined, // note: in normal usage, you'd probably set this a bit higher
       timestamps: true, // set timestamps for each word - automatically turned on by speaker_labels
       speaker_labels: this.state.speakerLabels, // includes the speaker_labels in separate objects unless resultsBySpeaker is enabled
       resultsBySpeaker: this.state.speakerLabels, // combines speaker_labels and results together into single objects, making for easier transcript outputting
@@ -47685,49 +47677,6 @@ exports.default = _react2.default.createClass({
     // In addition to this, it passes other service-level options along to the RecognizeStream that manages the actual WebSocket connection.
     this.handleStream((0, _recognizeMicrophone2.default)(this.getRecognizeOptions()));
   },
-  handleUploadClick: function handleUploadClick() {
-    if (this.state.audioSource === 'upload') {
-      this.stopTranscription();
-    } else {
-      this.dropzone.open();
-    }
-  },
-
-
-  handleUserFile: function handleUserFile(files) {
-    var file = files[0];
-    if (!file) {
-      return;
-    }
-    this.reset();
-    this.setState({ audioSource: 'upload' });
-    this.playFile(file);
-  },
-
-  handleUserFileRejection: function handleUserFileRejection() {
-    this.setState({ error: 'Sorry, that file does not appear to be compatible.' });
-  },
-  handleSample1Click: function handleSample1Click() {
-    this.handleSampleClick(1);
-  },
-  handleSample2Click: function handleSample2Click() {
-    this.handleSampleClick(2);
-  },
-  handleSampleClick: function handleSampleClick(which) {
-    if (this.state.audioSource === 'sample-' + which) {
-      return this.stopTranscription();
-    }
-    var filename = _samples2.default[this.state.model] && _samples2.default[this.state.model][which - 1].filename;
-    if (!filename) {
-      return this.handleError('No sample ' + which + ' available for model ' + this.state.model, _samples2.default[this.state.model]);
-    }
-    this.reset();
-    this.setState({
-      audioSource: 'sample-' + which
-    });
-    this.playFile('audio/' + filename);
-  },
-
 
   /**
      * @param {File|Blob|String} file - url to an audio file or a File instance fro user-provided files
@@ -47784,11 +47733,6 @@ exports.default = _react2.default.createClass({
     }).on('close', function (code, message) {
       return _this.handleRawdMessage({ close: true, code: code, message: message });
     });
-
-    // ['open','close','finish','end','error', 'pipe'].forEach(e => {
-    //     stream.recognizeStream.on(e, console.log.bind(console, 'rs event: ', e));
-    //     stream.on(e, console.log.bind(console, 'stream event: ', e));
-    // });
   },
   handleRawdMessage: function handleRawdMessage(msg) {
     this.setState({ rawMessages: this.state.rawMessages.concat(msg) });
@@ -47824,14 +47768,7 @@ exports.default = _react2.default.createClass({
       return _this2.setState(_extends({}, creds));
     }).catch(this.handleError);
   },
-  getKeywords: function getKeywords(model) {
-    // a few models have more than two sample files, but the demo can only handle two samples at the moment
-    // so this just takes the keywords from the first two samples
-    var files = _samples2.default[model];
-    return files && files.length >= 2 && files[0].keywords + ', ' + files[1].keywords || '';
-  },
   handleModelChange: function handleModelChange(model) {
-    this.setState({ model: model, keywords: this.getKeywords(model), speakerLabels: this.supportsSpeakerLabels(model) });
 
     // clear the microphone narrowband error if it's visible and a broadband model was just selected
     if (this.state.error === ERR_MIC_NARROWBAND && !this.isNarrowBand(model)) {
@@ -47854,19 +47791,6 @@ exports.default = _react2.default.createClass({
   handleSpeakerLabelsChange: function handleSpeakerLabelsChange() {
     this.setState({
       speakerLabels: !this.state.speakerLabels
-    });
-  },
-  handleKeywordsChange: function handleKeywordsChange(e) {
-    this.setState({ keywords: e.target.value });
-  },
-
-
-  // cleans up the keywords string into an array of individual, trimmed, non-empty keywords/phrases
-  getKeywordsArr: function getKeywordsArr() {
-    return this.state.keywords.split(',').map(function (k) {
-      return k.trim();
-    }).filter(function (k) {
-      return k;
     });
   },
   getFinalResults: function getFinalResults() {
@@ -47903,7 +47827,6 @@ exports.default = _react2.default.createClass({
     this.setState({ error: err.message || err });
   },
   render: function render() {
-    var _this3 = this;
 
     var buttonsEnabled = !!this.state.token || !!this.state.accessToken;
     var buttonClass = buttonsEnabled ? 'base--button' : 'base--button base--button_black';
@@ -47928,67 +47851,23 @@ exports.default = _react2.default.createClass({
     ) : null;
 
     var messages = this.getFinalAndLatestInterimResult();
-    var micBullet = typeof window !== "undefined" && _recognizeMicrophone2.default.isSupported ? _react2.default.createElement(
-      'li',
-      { className: 'base--li' },
-      'Use your microphone to record audio.'
-    ) : _react2.default.createElement(
-      'li',
-      { className: 'base--li base--p_light' },
-      'Use your microphone to record audio. (Not supported in current browser)'
-    );
 
     return _react2.default.createElement(
-      _reactDropzone2.default,
-      { onDropAccepted: this.handleUserFile, onDropRejected: this.handleUserFileRejection, maxSize: 200 * 1024 * 1024, accept: 'audio/wav, audio/l16, audio/ogg, audio/flac, .wav, .ogg, .opus, .flac', disableClick: true, className: 'dropzone _container _container_large', activeClassName: 'dropzone-active', rejectClassName: 'dropzone-reject', ref: function ref(node) {
-          _this3.dropzone = node;
-        } },
+      'div',
+      { className: 'flex setup' },
       _react2.default.createElement(
         'div',
-        { className: 'drop-info-container' },
+        { className: 'column' },
         _react2.default.createElement(
-          'div',
-          { className: 'drop-info' },
+          'p',
+          { className: this.supportsSpeakerLabels() ? 'base--p' : 'base--p_light' },
+          _react2.default.createElement('input', { role: 'checkbox', className: 'base--checkbox', type: 'checkbox', checked: this.state.speakerLabels,
+            onChange: this.handleSpeakerLabelsChange, disabled: !this.supportsSpeakerLabels(), id: 'speaker-labels' }),
           _react2.default.createElement(
-            'h1',
-            null,
-            'Drop an audio file here.'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Watson Speech to Text supports .wav, .opus, and .flac files up to 200mb.'
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'flex setup' },
-        _react2.default.createElement(
-          'div',
-          { className: 'column' },
-          _react2.default.createElement(
-            'p',
-            { className: this.supportsSpeakerLabels() ? 'base--p' : 'base--p_light' },
-            _react2.default.createElement('input', { role: 'checkbox', className: 'base--checkbox', type: 'checkbox', checked: this.state.speakerLabels,
-              onChange: this.handleSpeakerLabelsChange, disabled: !this.supportsSpeakerLabels(), id: 'speaker-labels' }),
-            _react2.default.createElement(
-              'label',
-              { className: 'base--inline-label', htmlFor: 'speaker-labels' },
-              'Detect multiple speakers ',
-              this.supportsSpeakerLabels() ? '' : ' (Not supported on current model)'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'column' },
-          _react2.default.createElement(
-            'p',
-            null,
-            'Keywords to spot: ',
-            _react2.default.createElement('input', { value: this.state.keywords, onChange: this.handleKeywordsChange, type: 'text',
-              id: 'keywords', placeholder: 'Type comma separated keywords here (optional)', className: 'base--input' })
+            'label',
+            { className: 'base--inline-label', htmlFor: 'speaker-labels' },
+            'Detect multiple speakers ',
+            this.supportsSpeakerLabels() ? '' : ' (Not supported on current model)'
           )
         )
       ),
@@ -47999,7 +47878,7 @@ exports.default = _react2.default.createClass({
           'button',
           { className: micButtonClass, onClick: this.handleMicClick },
           _react2.default.createElement(_watsonReactComponents.Icon, { type: this.state.audioSource === 'mic' ? 'stop' : 'microphone', fill: micIconFill }),
-          ' Record Audio'
+          ' Start'
         )
       ),
       err,
@@ -48011,8 +47890,7 @@ exports.default = _react2.default.createClass({
           { label: 'Text' },
           this.state.settingsAtStreamStart.speakerLabels ? _react2.default.createElement(_speaker.SpeakersView, { messages: messages }) : _react2.default.createElement(_transcript.Transcript, { messages: messages })
         )
-      ),
-      _react2.default.createElement('div', { className: 'disclaimer--message' })
+      )
     );
   }
 });
