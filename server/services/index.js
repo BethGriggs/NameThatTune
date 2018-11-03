@@ -7,5 +7,4 @@ IBMCloudEnv.init();
 
 module.exports = function(app){
 	require('./service-watson-speech-to-text')(app, serviceManager);
-
 };
