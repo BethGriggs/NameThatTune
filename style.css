@@ -1,1 +1,19 @@
 html { text-align: center; }
+
+body { 
+    background-color: #131313;
+}
+
+h1 { 
+    font-size: 6em;
+    color: white;
+    font-family: 'proxima-nova', sans-serif;
+}
+
+#title {
+    color: #131313; 
+    height: 2em;
+    width: 30%;
+    border: 0px;
+    border-radius: 2em;  
+}

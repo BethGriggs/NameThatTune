@@ -21,7 +21,8 @@ form.addEventListener("submit", (e) => {
     setTrack(tracks[tracksGuessed].name, tracks[tracksGuessed].preview_url);
   }
   else {
-    document.getElementById("result").innerText = "Wrong!";
+    console.log(tracks[tracksGuessed]);
+    document.getElementById("result").innerText = "Wrong! " + tracks[tracksGuessed].name + " - " + tracks[tracksGuessed].artists[0].name;
   }
 });
 
