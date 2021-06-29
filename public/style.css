@@ -1,0 +1,71 @@
+html { 
+    text-align: center;
+    height: 100%;
+ }
+
+body { 
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background-color: rgb(156 156 156);
+    background-image: linear-gradient(rgba(0,0,0,.6) 0,#121212 60%)
+}
+
+button {
+    background-color: #131313;
+    border: 0;
+    border-radius: 23px;
+    color: #fff;
+    position: relative;
+}
+
+#result {
+    color: white;
+    font-size: 2em;
+}
+
+#streak {
+    color: white;
+    font-size: 5em;
+}
+
+
+h1 { 
+    font-size: 6em;
+    color: white;
+    font-family: 'proxima-nova', sans-serif;
+}
+
+#title {
+    color: #131313; 
+    height: 2em;
+    width: 30%;
+    border: 0px;
+    border-radius: 2em;  
+}
+
+#login, #loggedin {
+    display: none;
+}
+
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+}
+
+ul {
+    display: block;
+}
+
+li {
+    display: inline;
+}
+
+.profile-image {
+    border-radius: 23px;
+    height: 50px;
+}

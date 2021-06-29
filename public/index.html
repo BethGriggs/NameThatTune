@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Name That Tune</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="login">
+        <a href="/login" class="btn btn-primary">Log in with Spotify</a>
+      </div>
+
+      <div id="loggedin">
+
+
+      <div id="user-profile">
+      </div>
+    <h1>Name That Tune</h1>
+        
+        <audio id="audio" controls autoplay>
+          <source id="audio_source" type="audio/mpeg">
+        Your browser does not support the audio element.
+        </audio>
+      
+        <form id="guess">
+          <label for="title"></label><br>
+          <input type="text" id="title" name="title" autocomplete="off"><br>
+        </form>
+
+        <p id="result"></p>
+
+        <p id="streak"></p>
+      </div>
+    </div>
+
+    <!DOCTYPE html>
+
+    <script id="user-profile-template" type="text/x-handlebars-template">
+      <div class="media">
+        <div class="media-body">
+          <dl class="dl-horizontal">
+            <button><img class="profile-image" src="{{images.0.url}}">{{display_name}}</button>
+          </dl>
+        </div>
+      </div>
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
