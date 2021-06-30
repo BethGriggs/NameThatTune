@@ -1,53 +1,69 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Name That Tune</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./style.css">
-  </head>
 
-  <body>
-    <div class="container">
-      <div id="login">
-        <a href="https://accounts.spotify.com/authorize?client_id=80149790a0a64e2a9aefeb85b956d7c6&response_type=token&redirect_uri=https%3A%2F%2Fbethgriggs.github.io%2FNameThatTune%2F&scope=" class="btn btn-primary">Log in with Spotify</a>
-      </div>
+<head>
+  <title>Name That Tune</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
 
-      <div id="loggedin">
-
-      <div id="user-profile">
-      </div>
-      <h1>Name That Tune</h1>
-        
-        <audio id="audio" controls autoplay>
-          <source id="audio_source" type="audio/mpeg">
-        Your browser does not support the audio element.
-        </audio>
-      
-        <form id="guess">
-          <label for="title"></label><br>
-          <input type="text" id="title" name="title" autocomplete="off"><br>
-        </form>
-
-        <p id="result"></p>
-
-        <p id="streak"></p>
+<body>
+  <div class="navbar-end">
+    <div class="navbar-item">
+      <div class="buttons">
+        <div id="user-profile"></div>
       </div>
     </div>
+  </div>
 
-    <!DOCTYPE html>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-two-thirds has-text-centered">
 
-    <script id="user-profile-template" type="text/x-handlebars-template">
-      <div class="media">
-        <div class="media-body">
-          <dl class="dl-horizontal">
-            <button><img class="profile-image" src="{{images.0.url}}">{{display_name}}</button>
-          </dl>
+          <div id="login">
+            <a href="https://accounts.spotify.com/authorize?client_id=80149790a0a64e2a9aefeb85b956d7c6&response_type=token&redirect_uri=https%3A%2F%2Fbethgriggs.github.io%2FNameThatTune%2F&scope=" class="btn btn-primary">Log in with Spotify</a>
+          </div>
+
+          <div id="loggedin">
+            <h1 class="title is-1 has-text-grey-lighter has-text-weight-light">Name That Tune</h1>
+
+            <div>
+              <audio id="audio" controls autoplay>
+                <source id="audio_source" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+
+            <form id="guess">
+              <label for="title"></label><br>
+              <input class="input is-large" type="text" id="title" name="title" autocomplete="off"><br>
+            </form>
+
+            <p class="is-size-3	has-text-grey-lighter has-text-weight-light" id="result"></p>
+            <p class="is-size-1	has-text-grey-lighter has-text-weight-light" id="streak"></p>
+          </div>
         </div>
       </div>
-    </script>
-    
-    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="./script.js"></script>
-  </body>
+    </div>
+  </section>
+
+  <!DOCTYPE html>
+
+  <script id="user-profile-template" type="text/x-handlebars-template">
+    <button class="button">
+      <span class="icon is-medium">
+        <figure class="image">
+          <img class="is-rounded" src="{{images.0.url}}">
+        </figure>
+      </span>
+      <span>{{display_name}}</span>
+    </button>
+  </script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="./script.js"></script>
+</body>
+
 </html>
