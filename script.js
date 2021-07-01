@@ -1,33 +1,24 @@
 (function() {
 
-    /**
-     * Obtains parameters from the hash of the URL
-     * @return Object
-     */
     function getHashParams() {
-      var hashParams = {};
-      var e, r = /([^&;=]+)=?([^&;]*)/g,
-          q = window.location.hash.substring(1);
-      while ( e = r.exec(q)) {
-         hashParams[e[1]] = decodeURIComponent(e[2]);
-      }
-      return hashParams;
+      let hash = window.location.hash;
+      return new URLSearchParams(hash.substr(1));
     }
-
+    
     var userProfileSource = document.getElementById('user-profile-template').innerHTML,
         userProfileTemplate = Handlebars.compile(userProfileSource),
         userProfilePlaceholder = document.getElementById('user-profile');
 
     var params = getHashParams();
 
-    var access_token = params.access_token,
-        error = params.error;
+    var access_token = params.get("access_token"),
+        error = params.get("error");
 
     if (error) {
       alert('There was an error during the authentication');
     } else {
       if (access_token) {
-    
+        
         $.ajax({
             url: 'https://api.spotify.com/v1/me',
             headers: {
