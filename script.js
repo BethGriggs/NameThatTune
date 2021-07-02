@@ -27,19 +27,17 @@ if (error) {
   alert('There was an error during the authentication');
 } else {
   if (access_token) {
-
-    $.ajax({
-      url: 'https://api.spotify.com/v1/me',
+    fetch('https://api.spotify.com/v1/me', {
       headers: {
-        'Authorization': 'Bearer ' + access_token
-      },
-      success: function (response) {
-        userProfilePlaceholder.innerHTML = userProfileTemplate(response);
-
+            'Authorization': 'Bearer ' + access_token
+          },
+    }).then(response => response.json())
+      .then((data) => {
+        console.log(data);
+        userProfilePlaceholder.innerHTML = userProfileTemplate(data);
         $('#login').hide();
         setUpGame(access_token);
         $('#loggedin').show();
-      }
     });
   } else {
     // render initial screen
@@ -47,7 +45,6 @@ if (error) {
     $('#loggedin').hide();
   }
 }
-
 
 function setTrack(track) {
   songName = track.name;
@@ -84,7 +81,6 @@ function getNextTrack() {
 }
 
 function setUpGame(token) {
-
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
