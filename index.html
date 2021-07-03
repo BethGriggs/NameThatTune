@@ -23,6 +23,7 @@
 
           <div id="login">
             <a href="https://accounts.spotify.com/authorize?client_id=80149790a0a64e2a9aefeb85b956d7c6&response_type=token&redirect_uri=https%3A%2F%2Fbethgriggs.github.io%2FNameThatTune%2F&scope=" class="btn btn-primary">Log in with Spotify</a>
+              class="btn btn-primary">Log in with Spotify</a>
           </div>
 
           <div id="loggedin">
@@ -41,7 +42,32 @@
             </form>
 
             <p class="is-size-3	has-text-grey-lighter has-text-weight-light" id="result"></p>
+
             <p class="is-size-1	has-text-grey-lighter has-text-weight-light" id="streak"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-one-fifth">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img id="artwork" src="https://bulma.io/images/placeholders/1280x960.png" alt="Album artwork">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p id="name" class="title is-4"></p>
+                  <p id="artist" class="subtitle is-6"></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

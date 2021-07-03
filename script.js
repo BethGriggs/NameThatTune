@@ -14,6 +14,9 @@ const access_token = params.get("access_token"),
 
 const player = document.getElementById("audio");
 const source = document.getElementById("audio_source");
+const name = document.getElementById("name");
+const artist = document.getElementById("artist");
+const artwork = document.getElementById("artwork");
 
 // Game setup 
 let songName = '';
@@ -54,12 +57,12 @@ function setTrack(track) {
 
 function skippedTrack() {
   streak = 0;
-  document.getElementById("result").innerText = "Skipped! " + tracks[tracksGuessed].name + " - " + tracks[tracksGuessed].artists[0].name;
+  document.getElementById("result").innerText = "Skipped!";
 }
 
 function wrongTrack() {
   streak = 0;
-  document.getElementById("result").innerText = "Wrong! " + tracks[tracksGuessed].name + " - " + tracks[tracksGuessed].artists[0].name;
+  document.getElementById("result").innerText = "Wrong!";
 }
 
 function correctTrack() {
@@ -90,10 +93,29 @@ function fetchTracks() {
     }, )
     .then(response => response.json())
     .then(data => {
-      console.log("total tracks:", data.tracks.length);
+      console.log(" tracks:", data.tracks[0]);
       tracks = data.tracks.filter(track => track.preview_url !== null);
       setTrack(tracks[0]);
     });
+}
+
+function setLastTrack() {
+  let trackid = tracks[tracksGuessed].id;
+  fetch('https://api.spotify.com/v1/tracks/' + trackid, {
+    headers: new Headers({
+      'Authorization': 'Bearer ' + access_token,
+      'Content-Type': 'application/json'
+    })
+  }, )
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    console.log(data.name);
+    name.innerText = data.name;
+    artist.innerText = data.artists[0].name;
+    artwork.setAttribute("src", data.album.images[0].url);
+  });
+
 }
 
 function setUpGame(token) {
@@ -112,6 +134,7 @@ function setUpGame(token) {
       wrongTrack();
     }
 
+    setLastTrack();
     tracksGuessed++;
     updateStreak();
     setTrack(getNextTrack());
