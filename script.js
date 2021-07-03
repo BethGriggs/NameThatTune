@@ -80,7 +80,24 @@ function getNextTrack() {
   return tracks[tracksGuessed];
 }
 
+function fetchTracks() {
+  const TEST_URL = "https://api.spotify.com/v1/recommendations?seed_genres=rock&limit=100";
+  fetch(TEST_URL, {
+      headers: new Headers({
+        'Authorization': 'Bearer ' + access_token,
+        'Content-Type': 'application/json'
+      })
+    }, )
+    .then(response => response.json())
+    .then(data => {
+      console.log("total tracks:", data.tracks.length);
+      tracks = data.tracks.filter(track => track.preview_url !== null);
+      setTrack(tracks[0]);
+    });
+}
+
 function setUpGame(token) {
+  fetchTracks();
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -99,17 +116,4 @@ function setUpGame(token) {
     updateStreak();
     setTrack(getNextTrack());
   });
-
-  const TEST_URL = "https://api.spotify.com/v1/recommendations?seed_genres=rock";
-  fetch(TEST_URL, {
-      headers: new Headers({
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      })
-    }, )
-    .then(response => response.json())
-    .then(data => {
-      tracks = data.tracks.filter(track => track.preview_url !== null);
-      setTrack(tracks[0]);
-    });
 }
